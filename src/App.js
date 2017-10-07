@@ -55,6 +55,10 @@ class BooksApp extends Component {
   };
 
   render() {
+    if (this.state.loading || this.state.error) {
+      return <Header title={this.state.error || 'Loading...'} />;
+    }
+
     return (
       <div className="app">
         {this.state.showSearchPage ? (
