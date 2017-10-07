@@ -4,6 +4,22 @@ import * as BooksAPI from './BooksAPI';
 import './App.css';
 
 class BooksApp extends Component {
+  static defaultProps = {
+    shelves: [
+      {
+        value: 'currentlyReading',
+        label: 'Currently Reading'
+      },
+      {
+        value: 'wantToRead',
+        label: 'Want to Read'
+      },
+      {
+        value: 'read',
+        label: 'Read'
+      }
+    ]
+  };
   state = {
     myReads: [],
     searchResults: [],
