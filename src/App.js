@@ -28,6 +28,10 @@ class BooksApp extends Component {
     error: null
   };
 
+  componentDidMount() {
+    this.getMyReads();
+  };
+
   /**
    * @description Retrieves a list of books via the BooksAPI pertaining to the user
    */
