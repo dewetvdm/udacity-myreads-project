@@ -20,11 +20,34 @@ class BooksApp extends Component {
       }
     ]
   };
+
   state = {
     myReads: [],
     searchResults: [],
     loading: true,
     error: null
+  };
+
+  /**
+   * @description Retrieves a list of books via the BooksAPI pertaining to the user
+   */
+  getMyReads() {
+    BooksAPI
+      .getAll()
+      .then(myReads => {
+        this.setState({
+          myReads,
+          loading: false,
+          error: null
+        });
+      })
+      .catch(error => {
+        console.error(error);
+        this.setState({
+          loading: false,
+          error: 'Ah snap! Someone forgot to pay the electricity bill again...'
+        });
+      })
   };
 
   render() {
