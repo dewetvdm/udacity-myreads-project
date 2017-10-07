@@ -5,6 +5,8 @@ import './App.css';
 
 import Header from './Header';
 import ListBooks from './ListBooks';
+import SearchBooks from './SearchBooks';
+
 class BooksApp extends Component {
   static defaultProps = {
     shelves: [
@@ -35,6 +37,24 @@ class BooksApp extends Component {
   };
 
   /**
+   * @description Retrieves a list of books via the BooksAPI matching the search query
+   * @param {object} e
+   */
+  searchBooks = e => {
+    const { value } = e.target;
+    if (value.length > 2) {
+      BooksAPI
+        .search(value)
+        .then(searchResults => {
+          this.setState({ searchResults });
+        })
+        .catch(error => {
+          console.error(error);
+          this.setState({ searchResults: [] });
+        });
+    }
+  };
+
   /**
    * @description Update the shelf value of the given book to the specified shelf
    * @param {object} book
@@ -55,6 +75,7 @@ class BooksApp extends Component {
       .catch(console.error);
   };
 
+  /**
    * @description Retrieves a list of books via the BooksAPI pertaining to the user
    */
   getMyReads() {
@@ -93,11 +114,21 @@ class BooksApp extends Component {
             />
           )}
         />
+        <Route
+          exact path='/search'
+          render={() => (
+            <SearchBooks
+              searchResults={this.state.searchResults}
+              myReads={this.state.myReads}
+              onSearch={this.searchBooks}
+              availableShelves={this.props.shelves}
+              moveToShelf={this.moveToShelf}
+            />
+          )}
+        />
       </div>
-    )
-  }
-}
+    );
+  };
 };
 
-export default BooksApp
 export default BooksApp;
